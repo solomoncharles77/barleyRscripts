@@ -4,13 +4,13 @@
 library(tidyverse)
 library(DescTools)
 library(FSA)
+
 # Set path to project folder and subfolder --------------------------------
 
 home <- getwd()
 rawData <- file.path(home, file = "rawData")
 rData <- file.path(home, file = 'rData')
 tidyData <- file.path(home, file = 'tidyData')
-
 
 # Read in and tidy data------------------------------------------------------------
 
@@ -19,17 +19,26 @@ awnData <- as.tibble(awnData)
 
 head(awnData)
 awnData <- awnData %>% 
+  rename("zeo1.b" = Over.Exp, "Wt" = Wild.Type, "gig1.a" = Gene.Kno ) %>% 
   gather(key=barleyLine, value=awnLength) %>% 
   mutate(barleyLine = as.factor(barleyLine))
 
 saveRDS(awnData, file.path(rData, file = 'barleyAwnData'))
-write.csv(awnData, file.path(tidyData, file = 'barleyAwnData-tidy.csv'))
+write.csv(awnData, file.path(tidyData, file = 'barleyAwnData_tidy.csv'))
 
 # Data Visualisation ------------------------------------------------------
 
 awnData %>% 
   ggplot( aes( x=barleyLine, y=awnLength, fill=barleyLine ) ) +
-  geom_boxplot()
+  geom_boxplot(width = 0.6) +
+  labs(x = "Barley Lines", y = "Awn Length (cm)") +
+  scale_fill_brewer(palette="Accent") +
+  theme_bw() +
+  theme(axis.text.x=element_text(face = "bold", size = 12),
+        axis.text.y = element_text(face = "bold", size = 12),
+        axis.title.x = element_text(face = "bold", size = 12),
+        axis.title.y = element_text(face = "bold", size = 12)
+        legend.position = "none")
 
 # Data Description --------------------------------------------------------
 

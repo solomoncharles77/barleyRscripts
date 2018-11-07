@@ -44,7 +44,7 @@ head(grainDimension)
 rm(gDimension, grainDepth, grainWidth, grainLength)
 
 saveRDS(grainDimension, file.path(rData, file = 'barleyMatureGrainDimension'))
-write.csv(grainDimension, file.path(tidyData, file = 'barleyMatureGrainDimension-tidy.csv'))
+write.csv(grainDimension, file.path(tidyData, file = 'barleyMatureGrainDimension_tidy.csv'))
 
 # Data Visualisation --------------------------------------------------------
 
